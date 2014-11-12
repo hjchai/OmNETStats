@@ -62,7 +62,7 @@ def QueueLengthFromPosition(fileName):
                 lanes[lane].append(pos) #Append the vehicle's position to the lane's list of positions
 
         totalLength = 0.0
-        totalSize = 0
+        totalSize = 0.0
         count = 0
         for key in laneCount:
             queueAverages.write(key + " " + str(laneLengthTotal[key]/laneCount[key]) + " " + str(laneSizeTotal[key]/laneCount[key]) + "\n")   #Write per-lane averages
