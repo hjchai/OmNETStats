@@ -19,11 +19,12 @@ def QueueLengthFromPosition(fileName):
     laneCount = {}
     laneLengthTotal = {}
     laneSizeTotal = {}
+    totalTime = 0
 
     with open(fileName, 'rt') as inFile, open(fileNum + '_QueueLengthsPerTimestep.txt', 'wt') as queueLengths, open(fileNum + '_QueueLengthsAverage.txt', 'wt') as queueAverages, open('QueueLengthTotals.txt','a') as queueTotals:
         next(inFile)    #Skip header
         curTime = 1.0   #Start on Timestep 1
-        lanes = {}  #Dict from lane to list of positions on that lane in each timestep
+	lanes = {}  #Dict from lane to list of positions on that lane in each timestep
         for row in inFile:
             if row.strip(): #Skip blank rows
                 row = row.split()
@@ -32,9 +33,10 @@ def QueueLengthFromPosition(fileName):
                 pos =  float(row[5])
                 if time != curTime: #If we've just finished a timestep
                     curTime = time
-                    for curLane in lanes:
+                    totalTime += 1
+		    for curLane in lanes:
                         distanceSet = lanes[curLane]    #
-                        if len(distanceSet) > 1:    #If the's more than 1 vehicle on the lane
+                        if len(distanceSet) > 0:    #If the's more than 1 vehicle on the lane
                             distanceSet.sort(reverse=True)  #Order vehicles, [0] being the leader
                             front = 0
                             back = 1
@@ -65,11 +67,11 @@ def QueueLengthFromPosition(fileName):
         totalSize = 0.0
         count = 0
         for key in laneCount:
-            queueAverages.write(key + " " + str(laneLengthTotal[key]/laneCount[key]) + " " + str(laneSizeTotal[key]/laneCount[key]) + "\n")   #Write per-lane averages
-            count += laneCount[key]
+            queueAverages.write(key + " " + str(float(laneLengthTotal[key])/totalTime) + " " + str(float(laneSizeTotal[key])/totalTime) + "\n")   #Write per-lane averages
+            count += totalTime
             totalLength += laneLengthTotal[key]
             totalSize += laneSizeTotal[key] #And add to the total data collection
-
+	#implement totaltime
         totalLength /= count
         totalSize /= count
         print(str(fileName) + " " + str(totalLength) + " " + str(totalSize))
