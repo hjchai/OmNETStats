@@ -13,7 +13,7 @@ class Vehicle:  #Tracks total existence time vs paused time
 def QueueTimeFromVelocity(fileName):
     fileNum = leadingInt(fileName)
     vehiclesDict = {}   #Map names to vehicles
-    with open(fileName, 'rt') as inFile, open(fileNum  + '_QueueTimePerVehicle.txt', 'wt') as queueTimes, open('QueueTimeTotals.txt', 'wt') as queueTotals:
+    with open(fileName, 'rt') as inFile, open(fileNum  + '_QueueTimePerVehicle.txt', 'wt') as queueTimes, open('QueueTimeTotals.txt', 'a') as queueTotals:
         next(inFile)    #Skip header
         for row in inFile:
             if row.strip(): #Skip blank rows
@@ -28,7 +28,6 @@ def QueueTimeFromVelocity(fileName):
                 speed = float(row[6])
                 if speed < 0.01:
                     vehicle.timePaused += 1
-
         timeTotal = 0   #Total times for all vehicles
         timePaused = 0
         for k in sorted(vehiclesDict, key=len): #Print each vehicle's data and add it to the total
