@@ -10,10 +10,10 @@ class Vehicle:  #Tracks total existence time vs paused time
         self.timeTotal = 0
         self.timePaused = 0
 
-def QueueTimeFromVelocity(fileName):
-    fileNum = leadingInt(fileName)
+def QueueTimeFromVelocity(fileName, path):
+    filePrefix = fileName[:-16]
     vehiclesDict = {}   #Map names to vehicles
-    with open(fileName, 'rt') as inFile, open(fileNum  + '_QueueTimePerVehicle.txt', 'wt') as queueTimes, open('QueueTimeTotals.txt', 'a') as queueTotals:
+    with open(path + fileName, 'rt') as inFile, open(path + filePrefix  + '_QueueTimePerVehicle.txt', 'wt') as queueTimes, open(path + 'QueueTimeTotals.txt', 'a') as queueTotals:
         next(inFile)    #Skip header
         for row in inFile:
             if row.strip(): #Skip blank rows

@@ -2,7 +2,7 @@
 queueTimeFromVelocity = True
 queueLengthFromPosition = True
 
-
+rootFolderPath = "/home/dylan/vgrid/VENTOS/results/cmd/"
 
 
 from QueueLengthFromPosition import *
@@ -21,9 +21,9 @@ if queueLengthFromPosition:
     except OSError:
         pass
 
-for file in os.listdir(os.getcwd()):    #For every file matching *_vehicleData* in current directory
+for file in os.listdir(rootFolderPath):    #For every file matching *_vehicleData* in current directory
     if '_vehicleData' in file:
         if queueTimeFromVelocity:
-            QueueTimeFromVelocity(file)
+            QueueTimeFromVelocity(file, rootFolderPath)
         if queueLengthFromPosition:
-            QueueLengthFromPosition(file)
+            QueueLengthFromPosition(file, rootFolderPath)

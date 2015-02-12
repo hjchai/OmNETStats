@@ -15,14 +15,14 @@ def leadingInt(s):
         return -1
     return s[:index]
 
-def QueueLengthFromPosition(fileName):
-    fileNum = leadingInt(fileName)
+def QueueLengthFromPosition(fileName, root):
+    filePrefix = fileName[:-16]
     laneCount = {}
     laneLengthTotal = {}
     laneSizeTotal = {}
     totalTime = 0
 
-    with open(fileName, 'rt') as inFile, open(fileNum + '_QueueLengthsPerTimestep.txt', 'wt') as queueLengths, open(fileNum + '_QueueLengthsAverage.txt', 'wt') as queueAverages, open('QueueLengthTotals.txt','a') as queueTotals, open(fileNum + '_QueueMaxSizes.txt','wt') as queueMaxSizes:
+    with open(root + fileName, 'rt') as inFile, open(root + filePrefix + '_QueueLengthsPerTimestep.txt', 'wt') as queueLengths, open(root + filePrefix + '_QueueLengthsAverage.txt', 'wt') as queueAverages, open(root + 'QueueLengthTotals.txt','a') as queueTotals, open(root + filePrefix + '_QueueMaxSizes.txt','wt') as queueMaxSizes:
         next(inFile)    #Skip header
         curTime = 1.0   #Start on Timestep 1
         lanes = {}  #Dict from lane to list of positions on that lane in each timestep
@@ -85,4 +85,4 @@ def QueueLengthFromPosition(fileName):
         totalLength /= count
         totalSize /= count
         print(str(fileName) + " " + str(totalLength) + " " + str(totalSize))
-        queueTotals.write(str(fileNum) + " " + str(totalLength) + " " + str(totalSize) + "\n")
+        queueTotals.write(str(filePrefix) + " " + str(totalLength) + " " + str(totalSize) + "\n")
