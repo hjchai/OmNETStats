@@ -2,7 +2,7 @@
 queueTimeFromVelocity = True
 queueLengthFromPosition = True
 
-rootFolderPath = "/home/dylan/vgrid/VENTOS/results/cmd/"
+rootFolderPath = "/home/huajun/VENTOS_all/VENTOS/results/cmd/"
 
 
 from QueueLengthFromPosition import *

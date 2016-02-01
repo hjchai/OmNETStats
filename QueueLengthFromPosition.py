@@ -23,7 +23,8 @@ def QueueLengthFromPosition(fileName, root):
     totalTime = 0
 
     with open(root + fileName, 'rt') as inFile, open(root + filePrefix + '_QueueLengthsPerTimestep.txt', 'wt') as queueLengths, open(root + filePrefix + '_QueueLengthsAverage.txt', 'wt') as queueAverages, open(root + 'QueueLengthTotals.txt','a') as queueTotals, open(root + filePrefix + '_QueueMaxSizes.txt','wt') as queueMaxSizes:
-        next(inFile)    #Skip header
+        for row in range(7):
+            next(inFile)    #Skip header
         curTime = 1.0   #Start on Timestep 1
         lanes = {}  #Dict from lane to list of positions on that lane in each timestep
         for row in inFile:
